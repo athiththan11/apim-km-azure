@@ -1,0 +1,22 @@
+package org.wso2.azure.client;
+
+public class AzureADConstants {
+    private AzureADConstants() {
+    }
+
+    public static final String AZURE = "Azure AD";
+    public static final String AZURE_AD = "AzureAD";
+    public static final String AZURE_DISPLAY_NAME = "Azure AD";
+
+    public static final String GRAPH_API_ENDPOINT = "microsoft_graph_api_endpoint";
+    public static final String APP_ID = "appid";
+    public static final String AD_APP_CLIENT_ID = "azure_ad_client_id";
+    public static final String AD_APP_CLIENT_SECRET = "azure_ad_client_secret";
+    public static final String AD_APP_TENANT = "azure_ad_tenant";
+    
+    public static final String GRANT_TYPE = "grant_type";
+    public static final String SCOPE = "scope";
+    public static final Object CLIENT_CREDENTIALS_GRANT_TYPE = "client_credentials";
+    public static final String BASIC = "Basic ";
+    public static final String CONTENT_TYPE_URL_ENCODED = "application/x-www-form-urlencoded";
+}
