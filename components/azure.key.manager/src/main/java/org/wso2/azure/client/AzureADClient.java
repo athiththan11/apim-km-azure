@@ -119,6 +119,9 @@ public class AzureADClient extends AbstractKeyManager {
             oauthAppInfo.addParameter(ApplicationConstants.OAUTH_CLIENT_SECRET, appInfo.getClientSecret());
         }
 
+        oauthAppInfo.addParameter(ApplicationConstants.OAUTH_CLIENT_GRANT,
+                AzureADConstants.CLIENT_CREDENTIALS_GRANT_TYPE);
+
         String additonalProperties = new Gson().toJson(appInfo);
         oauthAppInfo.addParameter(APIConstants.JSON_ADDITIONAL_PROPERTIES,
                 new Gson().fromJson(additonalProperties, Map.class));
@@ -143,9 +146,9 @@ public class AzureADClient extends AbstractKeyManager {
     }
 
     @Override
-    public OAuthApplicationInfo updateApplication(OAuthAppRequest appInfoDTO) throws APIManagementException {
-        // TODO Auto-generated method stub
-        return null;
+    public OAuthApplicationInfo updateApplication(OAuthAppRequest oauthAppRequest) throws APIManagementException {
+        OAuthApplicationInfo oauthAppInfo = oauthAppRequest.getOAuthApplicationInfo();
+        return oauthAppInfo;
     }
 
     @Override
@@ -233,7 +236,6 @@ public class AzureADClient extends AbstractKeyManager {
 
     @Override
     public AccessTokenInfo getNewApplicationAccessToken(AccessTokenRequest tokenRequest) throws APIManagementException {
-        // TODO Auto-generated method stub
         String clientId = tokenRequest.getClientId();
         String clientSecret = tokenRequest.getClientSecret();
 
@@ -245,7 +247,9 @@ public class AzureADClient extends AbstractKeyManager {
         List<NameValuePair> parameters = new ArrayList<>();
         parameters.add(new BasicNameValuePair(AzureADConstants.GRANT_TYPE, (String) grantType));
 
-        // TODO: scopes
+        // ? setting microsoft's default graph api scope. this implementation needs to
+        // ? be changed to support other scopes
+        parameters.add(new BasicNameValuePair(AzureADConstants.SCOPE, AzureADConstants.MICROSOFT_DEFAULT_SCOPE));
 
         AccessToken tokenResp = generateAccessToken(clientId, clientSecret, parameters);
         AccessTokenInfo tokenInfo = new AccessTokenInfo();
@@ -253,9 +257,7 @@ public class AzureADClient extends AbstractKeyManager {
             tokenInfo.setConsumerKey(clientId);
             tokenInfo.setConsumerSecret(clientSecret);
             tokenInfo.setAccessToken(tokenResp.getAccessToken());
-
-            // TODO: set scopes
-
+            tokenInfo.setScope(new String[] { AzureADConstants.MICROSOFT_DEFAULT_SCOPE });
             tokenInfo.setValidityPeriod(tokenResp.getExpiry());
             return tokenInfo;
         }
