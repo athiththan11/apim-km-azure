@@ -14,6 +14,10 @@ Execute the following command from the project's root directory to build
 mvn clean install
 ```
 
+## Quick Start
+
+To get started, refer to [Integrate Azure AD with WSO2 API Manager](docs/README.md)
+
 ## Contributing
 
 To contribute and develop the Azure AD Key Manager implementation, please fork the GitHub repository and send your pull-requests to [athiththan11/apim-km-azure](https://github.com/athiththan11/apim-km-azure)
